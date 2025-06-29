@@ -3,11 +3,46 @@ const router = express.Router();
 const Site = require('../models/Site');
 const { verifyToken, isAdmin } = require('../middleware/auth_mdw');
 
+const Log = require('../models/Log');
+
+// GET /api/sites/status - latest status for each site of the user
+// GET /api/sites/status
+router.get('/status', verifyToken, async (req, res) => {
+  try {
+    const sites = await Site.find({ owner: req.user.id });
+    const statuses = await Promise.all(sites.map(async site => {
+      const lastLog = await Log.findOne({ site: site._id })
+                               .sort({ addedAt: -1 })
+                               .lean();
+      return {
+        id: site._id,
+        urlname: site.urlname,
+        url: site.url,
+        lastStatus: lastLog?.status || 'unknown',
+        lastChecked: lastLog?.addedAt || null
+      };
+    }));
+    res.json(statuses);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 
 // GET all sites
-router.get('/', verifyToken,  async (req, res) => {
+// router.get('/', verifyToken,  async (req, res) => {
+//   try {
+//     const sites = await Site.find().populate('owner');
+//     res.json(sites);
+//   } catch (err) {
+//     res.status(500).json({ message: err.message });
+//   }
+// });
+
+// ✅ GET all sites of the connected user
+router.get('/', verifyToken, async (req, res) => {
   try {
-    const sites = await Site.find().populate('owner');
+    const sites = await Site.find({ owner: req.user.id }); // 👈 ici on filtre
     res.json(sites);
   } catch (err) {
     res.status(500).json({ message: err.message });

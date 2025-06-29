@@ -7,8 +7,8 @@ const { verifyToken, isAdmin } = require('../middleware/auth_mdw');
 
 
 
-//Get all users with middlware is admin 
-router.get('/', verifyToken, isAdmin, async(req,res)=> {
+//Get all users with middleware is admin ***
+router.get('/' , async(req,res)=> {
     try {
         const users = await User.find();
         res.json(users);
@@ -18,7 +18,7 @@ router.get('/', verifyToken, isAdmin, async(req,res)=> {
 });
 
 //Get one user 
-router.get('/:id', verifyToken, async(req,res)=> {
+router.get('/:id', async(req,res)=> {
     try {
        const user = await User.findById(req.params.id);
        if (!user) return res.status(404).json({ message: 'user not found !!' });

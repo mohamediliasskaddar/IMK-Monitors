@@ -3,11 +3,19 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 const cron = require('node-cron');
 const checkSites = require('./monitor'); // ✅ move this up here
+const cors = require('cors'); // ✅ Ajouter ceci
+
 
 const app = express();
 
 // Middleware pour parser JSON
 app.use(express.json());
+// ✅ Ajouter ceci AVANT les routes
+app.use(cors({
+  origin: 'http://localhost:4200', // autorise uniquement Angular
+  credentials: true
+}));
+
 
 // Routes
 app.use('/api/auth', require('./routes/auth'));
@@ -28,13 +36,13 @@ mongoose.connect(process.env.MONGO_URI)
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
       checkSites(); // ✅ Call it only after server is ready
+      
+      // Lancer le check toutes les 5 minutes
+        cron.schedule('*/5 * * * *', () => {
+          console.log("⏰ Cron running site check...");
+          checkSites();
+        });
     });
-
-    // Optional: enable periodic check
-    // cron.schedule('*/5 * * * *', () => {
-    //   console.log("🔁 Running site check...");
-    //   checkSites();
-    // });
 
   })
   .catch(err => {

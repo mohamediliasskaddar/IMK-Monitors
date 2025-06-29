@@ -4,10 +4,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const router = express.Router();
 
-// fonction simple pour test
-    // router.post('/register', (req, res) => {
-    //   res.json({ message: "Register route works!" });
-    // });
+
 
 //regsiter a user 
 const registerUser = async(req, res) => {

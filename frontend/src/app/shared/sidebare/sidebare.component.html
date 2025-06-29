@@ -1,0 +1,10 @@
+
+ <div class="sidebar">
+    <button *ngIf="userRole === 'admin'" (click)="select('users-list')">➕ users list</button>
+    
+    
+    <button *ngIf="userRole === 'user' " (click)="select('add-website')">📋 new site</button> 
+    <button *ngIf="userRole === 'user'" (click)="select('user-sites')">📜 My Sites</button>
+    <button *ngIf="userRole === 'user'" (click)="select('sites-status')">📜  Sites status</button>
+
+</div> 
