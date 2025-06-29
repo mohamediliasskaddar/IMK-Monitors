@@ -6,6 +6,27 @@ const { verifyToken, isAdmin } = require('../middleware/auth_mdw');
 
 
 
+// 👤 GET /api/users/me - récupérer son profil
+router.get('/me', verifyToken, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('-password');
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// 🛠️ PUT /api/users/me - mettre à jour son profil
+router.put('/me', verifyToken, async (req, res) => {
+  try {
+    const updated = await User.findByIdAndUpdate(req.user.id, req.body, { new: true }).select('-password');
+    if (!updated) return res.status(404).json({ message: 'User not found' });
+    res.json(updated);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
 
 //Get all users with middleware is admin ***
 router.get('/' , async(req,res)=> {
@@ -59,5 +80,8 @@ router.delete('/:id', verifyToken, isAdmin, async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
+
+
+
 
 module.exports = router;

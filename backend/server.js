@@ -5,6 +5,8 @@ const cron = require('node-cron');
 const checkSites = require('./monitor'); // ✅ move this up here
 const cors = require('cors'); // ✅ Ajouter ceci
 
+const CHECK_INTERVAL = parseInt(process.env.CHECK_INTERVAL_MINUTES, 10) || 5; 
+
 
 const app = express();
 
@@ -22,6 +24,8 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/users', require('./routes/userRoute'));
 app.use('/api/sites', require('./routes/siteRoute'));
 app.use('/api/logs', require('./routes/logRoute'));
+app.use('/api/config', require('./routes/configRoute'));
+
 
 // 404
 app.use((req, res) => {
@@ -38,8 +42,8 @@ mongoose.connect(process.env.MONGO_URI)
       checkSites(); // ✅ Call it only after server is ready
       
       // Lancer le check toutes les 5 minutes
-        cron.schedule('*/5 * * * *', () => {
-          console.log("⏰ Cron running site check...");
+        cron.schedule('*/${CHECK_INTERVAL} * * * *', () => {
+          console.log(`⏰Running site check every ${CHECK_INTERVAL} minutes`);
           checkSites();
         });
     });

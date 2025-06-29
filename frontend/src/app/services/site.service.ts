@@ -56,4 +56,13 @@ getSiteStatuses(): Observable<any[]> {
   deleteSite(id: string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`, { headers: this.getAuthHeaders() });
   }
+
+  // ➕ Nouvelle méthode pour récupérer la config
+getCheckInterval(): Observable<{ checkIntervalMinutes: number }> {
+  return this.http.get<{ checkIntervalMinutes: number }>(
+    `${this.apiUrl.replace('/sites','')}/config/check-interval`,
+    { headers: this.getAuthHeaders() }
+  );
+}
+
 }

@@ -10,12 +10,21 @@ import { SiteService } from '../../services/site.service';
   styleUrls: ['./sites-status.component.css']
 })
 export class SitesStatusComponent implements OnInit {
+  interval!: number;
+  
+
   private siteService = inject(SiteService);
   statuses: Array<{ id: string; urlname: string; url: string; lastStatus: string; lastChecked: string }> = [];
   loading = true;
   error: string | null = null;
-
+    
   ngOnInit() {
+    // D’abord récupérer la config
+    this.siteService.getCheckInterval().subscribe(cfg => {
+      this.interval = cfg.checkIntervalMinutes;
+      console.log("interrrrrrrrr ", this.interval);
+    });
+
     this.siteService.getSiteStatuses().subscribe({
       next: data => { this.statuses = data; this.loading = false; },
       error: err => { this.error = err.error?.message || 'Failed to load statuses'; this.loading = false; }

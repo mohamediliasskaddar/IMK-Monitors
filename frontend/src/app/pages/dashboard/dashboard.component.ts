@@ -41,12 +41,19 @@ import { UsersListComponent } from '../users-list/users-list.component';
 import { AddWebsiteComponent } from '../add-website/add-website.component';
 import { UserSitesComponent } from '../user-sites/user-sites.component';
 import { SitesStatusComponent } from '../sites-status/sites-status.component';
+import { ProfileComponent } from '../profile/profile.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [NgIf,SidebarComponent, UsersListComponent,
-     AddWebsiteComponent, UserSitesComponent,SitesStatusComponent],
+  imports: [NgIf,
+    SidebarComponent, 
+    UsersListComponent,
+    AddWebsiteComponent,
+    UserSitesComponent,
+    SitesStatusComponent,
+    ProfileComponent
+    ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
