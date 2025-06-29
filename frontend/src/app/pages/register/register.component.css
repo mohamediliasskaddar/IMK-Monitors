@@ -1,0 +1,13 @@
+.register-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: aqua;
+    margin: 100px;
+    /* gap : 100px, */
+    padding :100px,
+    
+}
+lable{
+    margin: 100px;
+}

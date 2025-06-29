@@ -1,0 +1,22 @@
+
+
+<div *ngIf="userRole === 'admin'" class="admin-dashboard">
+  <app-sidebar (sectionSelected)="onSectionSelected($event)" [userRole]="userRole"></app-sidebar>
+  <div class="admin-content">
+    <app-users-list *ngIf="selectedSection === 'users-list'"></app-users-list>
+    
+    <!-- autres sections admin -->
+  </div>
+</div>
+
+<div *ngIf="userRole === 'user'" class="user-dashboard">
+  <app-sidebar (sectionSelected)="onSectionSelected($event)" [userRole]="userRole"></app-sidebar>
+  <div class="user-content">
+    <!-- <app-new-site *ngIf="selectedSection === 'new-site'"></app-new-site> -->
+    <app-add-website *ngIf="selectedSection === 'add-website'"></app-add-website>
+    <app-user-sites *ngIf="selectedSection === 'user-sites'"></app-user-sites> 
+    <app-sites-status *ngIf="selectedSection === 'sites-status'"></app-sites-status> 
+    
+
+  </div>
+</div>

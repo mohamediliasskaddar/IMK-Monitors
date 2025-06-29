@@ -1,0 +1,24 @@
+<div class="add-website-container">
+  <h2>Ajouter un site à surveiller</h2>
+
+  <form [formGroup]="siteForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label>Nom du site</label>
+      <input formControlName="urlname" type="text" />
+    </div>
+
+    <div>
+      <label>URL</label>
+      <input formControlName="url" type="url" placeholder="https://example.com" />
+    </div>
+
+    <div>
+      <label>Email d'alerte</label>
+      <input formControlName="alertEmail" type="email" />
+    </div>
+
+    <button type="submit" [disabled]="siteForm.invalid">Ajouter</button>
+  </form>
+
+  <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+</div>

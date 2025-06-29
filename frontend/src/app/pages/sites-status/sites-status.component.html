@@ -1,0 +1,15 @@
+<div class="sites-status">
+  <h2>Site Statuses</h2>
+  <div *ngIf="loading">⏳ Loading statuses…</div>
+  <div *ngIf="error" class="error">❌ {{ error }}</div>
+  <ul *ngIf="!loading && statuses.length">
+    <li *ngFor="let s of statuses">
+      <strong>{{ s.urlname }}</strong> ({{ s.url }}) —
+      <span [class.up]="s.lastStatus==='up'" [class.down]="s.lastStatus==='down'">
+        {{ s.lastStatus | uppercase }}
+      </span>
+      <small>Last checked: {{ s.lastChecked | date:'short' }}</small>
+    </li>
+  </ul>
+  <p *ngIf="!loading && !statuses.length">No sites to monitor.</p>
+</div>
