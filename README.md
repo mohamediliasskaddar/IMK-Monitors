@@ -38,7 +38,7 @@
 
 ## 🖼️ Screenshots
 
-> Store screenshots in `docs/images/`. Reference them here as thumbnails or links.
+>  Some screenshots in `/uis/... `. 
 
 > login   :
  ![Login](/uis/login.png) 
@@ -54,7 +54,6 @@ Register ![Add Site](/uis/register.png)
 > Add a website to monitor:
  ![ add ](/uis/addSite.png) 
 
-*Tip:* Don’t embed full‑size images directly to keep README fast to load—use thumbnails or link to a `docs/` gallery.
 
 ---
 
