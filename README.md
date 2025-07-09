@@ -121,31 +121,10 @@ ng serve
 ```
 Open http://localhost:4200 in your browser.
 
-🏗️ Architecture & Folder Structure
-bash
-Copier
-Modifier
-IMK-Monitors/
-├── backend/
-│   ├── models/      # Mongoose schemas (User, Site, Log, Config)
-│   ├── routes/      # Express routers (auth, users, sites, logs, config)
-│   ├── middleware/  # JWT auth + role guards
-│   ├── monitor.js   # cron logic: axios checks + email alerts
-│   ├── emailService.js
-│   ├── server.js
-│   ├── monitor.js
-│   └── .env
-└── frontend/
-│   ├── src/app/
-    │   ├── pages/   # Angular standalone pages (login, dashboard, profile…)
-    │   ├── shared/  #navbare and sidebar
-    │   ├── services/ user, auth, site
-    │   ├── components/
-    │   └── app.routes.ts
-    ├── assets/
-    │   └── i18n/    # en.json, fr.json
-    ├── styles.css
-    └── main.ts
+🏗️ Architecture & Folder Structure:
+
+Project Structure ![Add Site](/uis/image.png) 
+
 🌐 Internationalization & Theming:
   
   > i18n via ngx‑translate + JSON files (assets/i18n/en.json, fr.json)
