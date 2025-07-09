@@ -46,7 +46,7 @@
 Register ![Add Site](/uis/register.png) 
 
  > Sites status: 
- ![Dashboard](/uis/SiteStatus.png) 
+ ![Dashboard](/uis/siteStatus.png) 
 
  > Users list : 
  ![ Users list ](/uis/usersList.png) 
@@ -69,7 +69,7 @@ Register ![Add Site](/uis/register.png)
 **Backend:**
 - Node.js + Express
 - MongoDB + Mongoose
-- JWT auth (bcrypt + jsonwebtoken)
+- JWT auth (bcrypt + jsonwebtoken)>
 - node‑cron for scheduling
 - nodemailer (Amazon SNS not developed yet ) for alerts
 
