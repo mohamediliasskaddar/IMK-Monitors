@@ -31,7 +31,11 @@ const siteSchema = new mongoose.Schema({
     required: true,
     lowercase: true,
     match: [/.+\@.+\..+/, 'Please fill a valid email address']
-  }
+  },
+  consecutiveFailures: {
+     type: Number, default: 0 },  // ← nouveau
+  alertSent: {
+     type: Boolean, default: false }        // ← pour éviter les doublons
 }, {
   timestamps: { createdAt: true, updatedAt: false } // Only createdAt, no updatedAt
 });

@@ -1,0 +1,83 @@
+{ "APP":{
+    "TITLE": " IMK monitor"
+},
+  "ADD_SITE": {
+    "TITLE": "Ajouter un site à surveiller",
+    "NAME": "Nom du site",
+    "URL": "URL",
+    "EMAIL": "Email d'alerte",
+    "BUTTON": "Ajouter",
+    "ph_email": "votre_email@exemple.com",
+    "plurl": "https://example.com"
+      },
+  
+  "SITE_LIST": {
+    "TITLE": " Mes sites surveillés",
+    "LOADING": " Chargement...",
+    "NO_SITES": "Aucun site pour le moment."
+  },
+  "SITE_STATUS": {
+    "TITLE": "Statuts des sites",
+    "LOADING": "Chargement des statuts…",
+    "CHECK_INTERVAL": "Vérification toutes les {{ interval }} minutes",
+    "LAST_CHECKED": "Dernière vérification",
+    "NO_SITES": "Aucun site à surveiller."
+  },
+  "PROFILE": {
+    "TITLE": "Mon Profil",
+    "LOADING": "Chargement...",
+    "NAME": "Nom",
+    "EMAIL": "Email",
+    "AGE": "Âge",
+    "GENDER": {
+      "LABEL": "Genre",
+      "SELECT": "-- Choisir --",
+      "MALE": "Homme",
+      "FEMALE": "Femme"
+    },
+    "ROLE": "Rôle",
+    "SUBMIT": "Enregistrer"
+  },
+  "USER_LIST": {
+    "TITLE": "Liste des utilisateurs",
+    "LOADING": "Chargement…",
+    "NAME": "Nom",
+    "EMAIL": "Email",
+    "ROLE": "Rôle",
+    "NO_USERS": "Aucun utilisateur trouvé.",
+    "ACTIONS": {
+      "TITLE": "Actions",
+      "VIEW": "Voir",
+      "EDIT": "Modifier",
+      "DELETE": "Supprimer"
+    }
+  },
+
+  "ADMIN_SITES": {
+    "TITLE": "Administration des sites",
+    "INTERVAL_LOADING": "Chargement de l’intervalle…",
+    "INTERVAL_LABEL": "Intervalle de vérification global (minutes)",
+    "SAVE_INTERVAL": "Enregistrer",
+    "LOADING_SITES": "Chargement des sites…",
+    "FILTER_LABEL": "Filtrer par statut",
+    "FILTER": {
+      "ALL": "Tous",
+      "UP": "UP",
+      "DOWN": "DOWN"
+    },
+    "TABLE": {
+      "NAME": "Nom",
+      "URL": "URL",
+      "OWNER": "Propriétaire",
+      "STATUS": "Statut",
+      "LAST_CHECK": "Dernier check"
+    },
+    "NO_SITES": "Aucun site trouvé."
+  }
+
+
+
+
+
+
+}

@@ -1,24 +1,187 @@
-<div class="add-website-container">
-  <h2>Ajouter un site à surveiller</h2>
+
+<!-- <div class="add-website-container">
+  <h2>{{ 'ADD_SITE.TITLE' | translate }}</h2>
 
   <form [formGroup]="siteForm" (ngSubmit)="onSubmit()">
     <div>
-      <label>Nom du site</label>
+      <label>{{ 'ADD_SITE.NAME' | translate }}</label>
       <input formControlName="urlname" type="text" />
     </div>
 
     <div>
-      <label>URL</label>
+      <label>{{ 'ADD_SITE.URL' | translate }}</label>
       <input formControlName="url" type="url" placeholder="https://example.com" />
     </div>
 
     <div>
-      <label>Email d'alerte</label>
+      <label>{{ 'ADD_SITE.EMAIL' | translate }}</label>
       <input formControlName="alertEmail" type="email" />
     </div>
 
-    <button type="submit" [disabled]="siteForm.invalid">Ajouter</button>
+    <button type="submit" [disabled]="siteForm.invalid">
+      {{ 'ADD_SITE.BUTTON' | translate }}
+    </button>
   </form>
 
   <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+</div> -->
+<div class="container-fluid p-0">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+      
+      <!-- Page Header -->
+      <div class="card shadow-sm border-0 mb-4">
+        <div class="card-header bg-success text-white">
+          <h2 class="card-title mb-0">
+            <!-- <i class="fas fa-plus-circle me-2"></i> -->
+            <!-- <i class="fas fa-plus-circle me-2"></i> -->
+            {{ 'ADD_SITE.TITLE' | translate }}
+          </h2>
+        </div>
+        
+        <!-- Form Card Body -->
+        <div class="card-body p-4">
+          <form [formGroup]="siteForm" (ngSubmit)="onSubmit()" class="needs-validation" novalidate>
+            
+            <!-- Website Name Field -->
+            <div class="mb-3">
+              <label for="urlname" class="form-label fw-semibold">
+                <i class="fas fa-tag me-2 text-success"></i>
+                {{ 'ADD_SITE.NAME' | translate }}
+              </label>
+              <input 
+                formControlName="urlname" 
+                type="text" 
+                id="urlname"
+                class="form-control form-control-lg"
+                [class.is-invalid]="siteForm.get('urlname')?.invalid && siteForm.get('urlname')?.touched"
+                [class.is-valid]="siteForm.get('urlname')?.valid && siteForm.get('urlname')?.touched"
+                placeholder="Enter website name" />
+              <div class="invalid-feedback" *ngIf="siteForm.get('urlname')?.invalid && siteForm.get('urlname')?.touched">
+                Please provide a valid website name.
+              </div>
+            </div>
+            
+            <!-- Website URL Field -->
+            <div class="mb-3">
+              <label for="url" class="form-label fw-semibold">
+                <i class="fas fa-globe me-2 text-primary"></i>
+                {{ 'ADD_SITE.URL' | translate }}
+              </label>
+              <div class="input-group input-group-lg">
+                <!-- <span class="input-group-text bg-light">
+                  <i class="fas fa-link text-muted"></i>
+                </span> -->
+                <input 
+                  formControlName="url" 
+                  type="url" 
+                  id="url"
+                  class="form-control"
+                  [class.is-invalid]="siteForm.get('url')?.invalid && siteForm.get('url')?.touched"
+                  [class.is-valid]="siteForm.get('url')?.valid && siteForm.get('url')?.touched"
+                  [placeholder]="'ADD_SITE.plurl' | translate"/>
+                <div class="invalid-feedback" *ngIf="siteForm.get('url')?.invalid && siteForm.get('url')?.touched">
+                  Please provide a valid URL.
+                </div>
+              </div>
+              <div class="form-text">
+                Enter the complete URL including https://
+              </div>
+            </div>
+            <!-- placeholder="your_email@example.com" /> -->
+            <!-- Alert Email Field -->
+            <div class="mb-4">
+              <label for="alertEmail" class="form-label fw-semibold">
+                <i class="fas fa-envelope me-2 text-warning"></i>
+                {{ 'ADD_SITE.EMAIL' | translate }}
+              </label>
+              <div class="input-group input-group-lg">
+                <input 
+                  formControlName="alertEmail" 
+                  type="email" 
+                  id="alertEmail"
+                  class="form-control"
+                  [class.is-invalid]="siteForm.get('alertEmail')?.invalid && siteForm.get('alertEmail')?.touched"
+                  [class.is-valid]="siteForm.get('alertEmail')?.valid && siteForm.get('alertEmail')?.touched"
+                  [placeholder]="'ADD_SITE.ph_email' | translate"
+                  />
+                <div class="invalid-feedback" *ngIf="siteForm.get('alertEmail')?.invalid && siteForm.get('alertEmail')?.touched">
+                  Please provide a valid email address.
+                </div>
+              </div>
+              <div class="form-text">
+                <i class="fas fa-bell me-1"></i>
+                You'll receive notifications at this email address
+              </div>
+            </div>
+            
+            <!-- Submit Button -->
+            <div class="d-grid gap-2">
+              <button 
+                type="submit" 
+                class="btn btn-success btn-lg"
+                [disabled]="siteForm.invalid"
+                [class.disabled]="siteForm.invalid">
+                <i class="fas fa-plus-circle me-2"></i>
+                {{ 'ADD_SITE.BUTTON' | translate }}
+                <span *ngIf="siteForm.invalid" class="ms-2">
+                  <i class="fas fa-exclamation-triangle"></i>
+                </span>
+              </button>
+            </div>
+            
+          </form>
+        </div>
+      </div>
+      
+      <!-- Error Message Alert -->
+      <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
+        <i class="fas fa-exclamation-circle me-2"></i>
+        <!-- <strong>Error!</strong> {{ errorMessage }} -->
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      
+      <!-- Success Message (if needed) -->
+      <div *ngIf="successMessage" class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+        <i class="fas fa-check-circle me-2"></i>
+        <strong>Success!</strong> {{ successMessage }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      
+      <!-- Help Card -->
+      <div class="card border-info shadow-sm">
+        <div class="card-header bg-info text-white">
+          <h6 class="mb-0">
+            <i class="fas fa-question-circle me-2"></i>
+            Need Help?
+          </h6>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <h6 class="text-info">
+                <i class="fas fa-lightbulb me-2"></i>
+                Tips:
+              </h6>
+              <ul class="list-unstyled small">
+                <li><i class="fas fa-check text-success me-2"></i>Use descriptive names</li>
+                <li><i class="fas fa-check text-success me-2"></i>Include https:// in URL</li>
+                <li><i class="fas fa-check text-success me-2"></i>Use active email address</li>
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <h6 class="text-info">
+                <i class="fas fa-shield-alt me-2"></i>
+                Security:
+              </h6>
+              <p class="small text-muted mb-0">
+                Your email will only be used for site monitoring alerts and notifications.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
 </div>

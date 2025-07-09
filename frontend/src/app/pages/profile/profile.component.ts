@@ -4,11 +4,13 @@ import { CommonModule, isPlatformBrowser, NgIf } from '@angular/common';
 import { PLATFORM_ID } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
+
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NgIf, FormsModule ],
+  imports: [CommonModule, ReactiveFormsModule, NgIf, FormsModule, TranslateModule ],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
@@ -30,7 +32,7 @@ export class ProfileComponent implements OnInit {
       age: ['', Validators.min(0)],
       gender: ['', Validators.required],
       // role non éditable
-      role: [{ value: '', disabled: true }]
+      role: [{ value: '', disabled: true  }]
     });
   }
 

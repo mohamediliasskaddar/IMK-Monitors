@@ -1,0 +1,81 @@
+{
+   "APP":{
+    "TITLE": " IMK monitor"
+},
+  "ADD_SITE": {
+    "TITLE": "Add a site to monitor",
+    "NAME": "Site name",
+    "URL": "URL",
+    "EMAIL": "Alert email",
+    "BUTTON": "Add",
+    "ph_email": "your_email@example.com",
+    "plurl": "https://exemple.com"
+  },
+   "SITE_LIST": {
+    "TITLE": "My Monitored Sites",
+    "LOADING": "Loading...",
+    "NO_SITES": "No sites yet."
+  },
+  
+  "SITE_STATUS": {
+    "TITLE": "Site Statuses",
+    "LOADING": "Loading statuses…",
+    "CHECK_INTERVAL": "Checking every {{ interval }} minutes",
+    "LAST_CHECKED": "Last checked",
+    "NO_SITES": "No sites to monitor."
+  },
+  "PROFILE": {
+    "TITLE": "My Profile",
+    "LOADING": "Loading...",
+    "NAME": "Name",
+    "EMAIL": "Email",
+    "AGE": "Age",
+    "GENDER": {
+      "LABEL": "Gender",
+      "SELECT": "-- Select --",
+      "MALE": "Male",
+      "FEMALE": "Female"
+    },
+    "ROLE": "Role",
+    "SUBMIT": "Save"
+  },
+   "USER_LIST": {
+    "TITLE": "User List",
+    "LOADING": "Loading…",
+    "NAME": "Name",
+    "EMAIL": "Email",
+    "ROLE": "Role",
+    "NO_USERS": "No users found.",
+    "ACTIONS": {
+      "TITLE": "Actions",
+      "VIEW": "View",
+      "EDIT": "Edit",
+      "DELETE": "Delete"
+    }
+  },
+  "ADMIN_SITES": {
+    "TITLE": "Site Administration",
+    "INTERVAL_LOADING": "Loading interval…",
+    "INTERVAL_LABEL": "Global check interval (minutes)",
+    "SAVE_INTERVAL": "Save",
+    "LOADING_SITES": "Loading sites…",
+    "FILTER_LABEL": "Filter by status",
+    "FILTER": {
+      "ALL": "All",
+      "UP": "UP",
+      "DOWN": "DOWN"
+    },
+    "TABLE": {
+      "NAME": "Name",
+      "URL": "URL",
+      "OWNER": "Owner",
+      "STATUS": "Status",
+      "LAST_CHECK": "Last check"
+    },
+    "NO_SITES": "No sites found."
+  }
+
+
+
+
+}

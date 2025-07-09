@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 export class SiteService {
 
   private apiUrl = 'http://localhost:3000/api/sites';
+  private configUrl = 'http://localhost:3000/api/config';
 
   constructor(private http: HttpClient) {}
 
@@ -20,6 +21,22 @@ export class SiteService {
     });
   }
 
+  // Récupère la liste de tous les sites + owner + dernier statut (admin)
+  getAllSiteStatuses(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/status/all`, {
+      headers: this.getAuthHeaders()
+    });
+  }
+
+  // Met à jour l'intervalle de vérification pour un site donné
+  // updateCheckInterval(siteId: string, checkInterval: number): Observable<any> {
+  //   return this.http.put<any>(
+  //     `${this.apiUrl}/${siteId}`,
+  //     { checkInterval },
+  //     { headers: this.getAuthHeaders() }
+  //   );
+  // }
+
   // 🟢 Get the status of all monitored sites (from backend endpoint /api/sites/status)
 getSiteStatuses(): Observable<any[]> {
   return this.http.get<any[]>(`${this.apiUrl}/status`, {
@@ -27,7 +44,30 @@ getSiteStatuses(): Observable<any[]> {
   });
 }
 
+ // Récupérer l'intervalle global
+  // getCheckInterval(): Observable<{ checkIntervalMinutes: number }> {
+  //   return this.http.get<{ checkIntervalMinutes: number }>(
+  //     `${this.configUrl}/check-interval`,
+  //     { headers: this.getAuthHeaders() }
+  //   );
+  // }
 
+  // Mettre à jour l'intervalle global
+  // updateCheckIntervalValue(minutes: number): Observable<{ checkIntervalMinutes: number }> {
+  //   return this.http.put<{ checkIntervalMinutes: number }>(
+  //     `${this.configUrl}/check-interval`,
+  //     { checkIntervalMinutes: minutes },
+  //     { headers: this.getAuthHeaders() }
+  //   );
+  // }
+// Met à jour l'intervalle de vérification global (admin seulement)
+updateCheckIntervalValue(newInterval: number): Observable<any> {
+  return this.http.put<any>(
+    `${this.apiUrl.replace('/sites', '/config')}/check-interval`,
+    { checkInterval: newInterval },
+    { headers: this.getAuthHeaders() }
+  );
+}
 
  
 

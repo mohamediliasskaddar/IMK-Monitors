@@ -1,11 +1,12 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { SiteService } from '../../services/site.service';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-user-sites',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule],
   templateUrl: './user-sites.component.html',
   styleUrls: ['./user-sites.component.css']
 })

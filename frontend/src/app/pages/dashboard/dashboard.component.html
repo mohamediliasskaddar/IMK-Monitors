@@ -1,11 +1,13 @@
-
+<!-- <app-nav-bar></app-nav-bar>
 
 <div *ngIf="userRole === 'admin'" class="admin-dashboard">
   <app-sidebar (sectionSelected)="onSectionSelected($event)" [userRole]="userRole"></app-sidebar>
   <div class="admin-content">
+    <app-profile *ngIf="selectedSection === 'profile'"></app-profile>
     <app-users-list *ngIf="selectedSection === 'users-list'"></app-users-list>
+    <app-admin-sites *ngIf="selectedSection === 'users-sites'"></app-admin-sites>
+    <app-login *ngIf="selectedSection === 'log-out'"></app-login>
     
-    <!-- autres sections admin -->
   </div>
 </div>
 
@@ -16,7 +18,179 @@
     <app-user-sites *ngIf="selectedSection === 'user-sites'"></app-user-sites> 
     <app-sites-status *ngIf="selectedSection === 'sites-status'"></app-sites-status>
     <app-profile *ngIf="selectedSection === 'profile'"></app-profile>
-    
+    <app-login *ngIf="selectedSection === 'log-out'"></app-login>
 
+  </div>
+</div> -->
+<!-- Fixed Top Navigation with Bootstrap -->
+<app-nav-bar ></app-nav-bar>
+
+<!-- Main Dashboard Container with Bootstrap Grid -->
+<div class="container-fluid" style="margin-top: 60px; height: calc(100vh - 60px);">
+  <div class="row h-100 g-0">
+    
+    <!-- Admin Dashboard -->
+    <div *ngIf="userRole === 'admin'" class="col-12 h-100">
+      <div class="row h-100 g-0">
+        
+        <!-- Admin Sidebar -->
+        <div class="col-lg-2 col-md-3 col-sm-4 bg-light border-end shadow-sm d-none d-sm-block">
+          <app-sidebar 
+            (sectionSelected)="onSectionSelected($event)" 
+            [userRole]="userRole"
+            class="h-100 overflow-auto">
+          </app-sidebar>
+        </div>
+        
+        <!-- Admin Main Content -->
+        <div class="col-lg-10 col-md-9 col-sm-8 col-12 bg-white">
+          <div class="container-fluid p-4 h-100 overflow-auto bg-light">
+            <div class="row">
+              <div class="col-12">
+                
+                <!-- Profile Section -->
+                <div *ngIf="selectedSection === 'profile'" class="card shadow-sm border-0 mb-4">
+                  <div class="card-body p-4">
+                    <app-profile></app-profile>
+                  </div>
+                </div>
+                
+                <!-- Users List Section -->
+                <div *ngIf="selectedSection === 'users-list'" class="card shadow-sm border-0 mb-4">
+                  <!-- <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-users me-2"></i>Users Management</h5>
+                  </div> -->
+                  <div class="card-body p-4">
+                    <app-users-list></app-users-list>
+                  </div>
+                </div>
+                
+                <!-- Admin Sites Section -->
+                <div *ngIf="selectedSection === 'users-sites'" class="card shadow-sm border-0 mb-4">
+                  <div class="card-header bg-info text-white">
+                    <h5 class="mb-0"><i class="fas fa-globe me-2"></i>Sites Management</h5>
+                  </div>
+                  <div class="card-body p-4">
+                    <app-admin-sites></app-admin-sites>
+                  </div>
+                </div>
+                
+                <!-- Logout Section -->
+                <div *ngIf="selectedSection === 'log-out'" class="card shadow-sm border-0 mb-4">
+                  <div class="card-body p-4 text-center">
+                    <app-login></app-login>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+
+    <!-- User Dashboard -->
+    <div *ngIf="userRole === 'user'" class="col-12 h-100">
+      <div class="row h-100 g-0">
+        
+        <!-- User Sidebar -->
+        <div class="col-lg-2 col-md-3 col-sm-4 bg-light border-end shadow-sm d-none d-sm-block">
+          <app-sidebar 
+            (sectionSelected)="onSectionSelected($event)" 
+            [userRole]="userRole"
+            class="h-100 overflow-auto">
+          </app-sidebar>
+        </div>
+        
+        <!-- User Main Content -->
+        <div class="col-lg-10 col-md-9 col-sm-8 col-12 bg-white">
+          <div class="container-fluid p-4 h-100 overflow-auto bg-light">
+            <div class="row">
+              <div class="col-12">
+                
+                <!-- Add Website Section -->
+                <div *ngIf="selectedSection === 'add-website'" class="card shadow-sm border-0 mb-4">
+                  <!-- <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-plus-circle me-2"></i>Add New Website</h5>
+                  </div> -->
+                  <div class="card-body p-4">
+                    <app-add-website></app-add-website>
+                  </div>
+                </div>
+                
+                <!-- User Sites Section -->
+                <div *ngIf="selectedSection === 'user-sites'" class="card shadow-sm border-0 mb-4">
+                  <!-- <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-list me-2"></i>My Websites</h5>
+                  </div> -->
+                  <div class="card-body p-4">
+                    <app-user-sites></app-user-sites>
+                  </div>
+                </div>
+                
+                <!-- Sites Status Section -->
+                <div *ngIf="selectedSection === 'sites-status'" class="card shadow-sm border-0 mb-4">
+                  <!-- <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0"><i class="fas fa-chart-line me-2"></i>Sites Status</h5>
+                  </div> -->
+                  <div class="card-body p-4">
+                    <app-sites-status></app-sites-status>
+                  </div>
+                </div>
+                
+                <!-- Profile Section -->
+                <div *ngIf="selectedSection === 'profile'" class="card shadow-sm border-0 mb-4">
+                  <!-- <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0"><i class="fas fa-user me-2"></i>My Profile</h5>
+                  </div> -->
+                  <div class="card-body p-4">
+                    <app-profile></app-profile>
+                  </div>
+                </div>
+                
+                <!-- Logout Section -->
+                <div *ngIf="selectedSection === 'log-out'" class="card shadow-sm border-0 mb-4">
+                  <div class="card-body p-4 text-center">
+                    <app-login></app-login>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<!-- Mobile Sidebar Toggle Button (appears only on small screens) -->
+<button class="btn btn-primary position-fixed d-sm-none" 
+        style="top: 70px; left: 10px; z-index: 1000;"
+        type="button" 
+        data-bs-toggle="offcanvas" 
+        data-bs-target="#mobileSidebar">
+  <i class="fas fa-bars"></i>
+</button>
+
+<!-- Mobile Offcanvas Sidebar -->
+<div class="offcanvas offcanvas-start d-sm-none" 
+     tabindex="-1" 
+     id="mobileSidebar">
+  <div class="offcanvas-header bg-primary text-white">
+    <h5 class="offcanvas-title">Menu</h5>
+    <button type="button" 
+            class="btn-close btn-close-white" 
+            data-bs-dismiss="offcanvas"></button>
+  </div>
+  <div class="offcanvas-body p-0">
+    <app-sidebar  *ngIf="userRole === 'admin'"
+      (sectionSelected)="onSectionSelected($event)" 
+      [userRole] ="userRole"
+      class="h-100">
+    </app-sidebar>
   </div>
 </div>

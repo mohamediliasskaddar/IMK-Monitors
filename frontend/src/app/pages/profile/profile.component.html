@@ -1,36 +1,244 @@
+<!-- 
 <div class="profile-container">
-  <h2>Mon Profil</h2>
+  <h2>{{ 'PROFILE.TITLE' | translate }}</h2>
 
-  <div *ngIf="loading">⏳ Chargement...</div>
+  <div *ngIf="loading">⏳ {{ 'PROFILE.LOADING' | translate }}</div>
   <div *ngIf="errorMessage" class="error">❌ {{ errorMessage }}</div>
+
   <form *ngIf="!loading" [formGroup]="profileForm" (ngSubmit)="onSubmit()">
     <div>
-      <label>Nom</label>
-      <input formControlName="name" type="text"/>
-    </div>
-    <div>
-      <label>Email</label>
-      <input formControlName="email" type="email"/>
-    </div>
-    <div>
-      <label>Âge</label>
-      <input formControlName="age" type="number"/>
-    </div>
-    <div>
-      <label>Genre</label>
-      <select formControlName="gender">
-        <option value="">-- Choisir --</option>
-        <option value="male">Homme</option>
-        <option value="female">Femme</option>
-      </select>
-    </div>
-    <div>
-      <label>Rôle</label>
-      <input formControlName="role" type="text"  />
+      <label>{{ 'PROFILE.NAME' | translate }}</label>
+      <input formControlName="name" type="text" />
     </div>
 
-    <button type="submit" [disabled]="profileForm.invalid">Enregistrer</button>
+    <div>
+      <label>{{ 'PROFILE.EMAIL' | translate }}</label>
+      <input formControlName="email" type="email" />
+    </div>
+
+    <div>
+      <label>{{ 'PROFILE.AGE' | translate }}</label>
+      <input formControlName="age" type="number" />
+    </div>
+
+    <div>
+      <label>{{ 'PROFILE.GENDER.LABEL' | translate }}</label>
+      <select formControlName="gender">
+        <option value="">{{ 'PROFILE.GENDER.SELECT' | translate }}</option>
+        <option value="male">{{ 'PROFILE.GENDER.MALE' | translate }}</option>
+        <option value="female">{{ 'PROFILE.GENDER.FEMALE' | translate }}</option>
+      </select>
+    </div>
+
+    <div>
+      <label>{{ 'PROFILE.ROLE' | translate }}</label>
+      <input formControlName="role" type="text" />
+    </div>
+
+    <button type="submit" [disabled]="profileForm.invalid">
+      {{ 'PROFILE.SUBMIT' | translate }}
+    </button>
   </form>
 
   <p *ngIf="successMessage" class="success">{{ successMessage }}</p>
+</div> -->
+<div class="container-fluid p-0">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+      
+      <!-- Page Header -->
+      <div class="card shadow-sm border-0 mb-4">
+        <div class="card-header bg-info text-white">
+          <h2 class="card-title mb-0 d-flex align-items-center">
+            <i class="fas fa-user-circle me-3 fs-4"></i>
+            {{ 'PROFILE.TITLE' | translate }}
+          </h2>
+        </div>
+      </div>
+      
+      <!-- Loading State -->
+      <div *ngIf="loading" class="card shadow-sm border-0 mb-4">
+        <div class="card-body text-center py-5">
+          <div class="spinner-border text-info mb-3" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <h5 class="text-muted">
+            {{ 'PROFILE.LOADING' | translate }}
+          </h5>
+        </div>
+      </div>
+      
+      <!-- Error Message -->
+      <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
+        <strong>Error!</strong> {{ errorMessage }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+      
+      <!-- Profile Form -->
+      <div *ngIf="!loading" class="card shadow-sm border-0">
+        <div class="card-body p-4">
+          <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="needs-validation" novalidate>
+            
+            <!-- Name Field -->
+            <div class="mb-3">
+              <label for="name" class="form-label fw-semibold">
+                {{ 'PROFILE.NAME' | translate }}
+              </label>
+              <input 
+                formControlName="name" 
+                type="text" 
+                id="name"
+                class="form-control form-control-lg"
+                [class.is-invalid]="profileForm.get('name')?.invalid && profileForm.get('name')?.touched"
+                [class.is-valid]="profileForm.get('name')?.valid && profileForm.get('name')?.touched"
+                placeholder="Enter your full name" />
+              <div class="invalid-feedback" *ngIf="profileForm.get('name')?.invalid && profileForm.get('name')?.touched">
+                Please provide a valid name.
+              </div>
+            </div>
+            
+            <!-- Email Field -->
+            <div class="mb-3">
+              <label for="email" class="form-label fw-semibold">
+                {{ 'PROFILE.EMAIL' | translate }}
+              </label>
+              <div class="input-group input-group-lg">
+                <span class="input-group-text bg-light">
+                  <i class="fas fa-at text-muted"></i>
+                </span>
+                <input 
+                  formControlName="email" 
+                  type="email" 
+                  id="email"
+                  class="form-control"
+                  [class.is-invalid]="profileForm.get('email')?.invalid && profileForm.get('email')?.touched"
+                  [class.is-valid]="profileForm.get('email')?.valid && profileForm.get('email')?.touched"
+                  placeholder="your-email@example.com" />
+                <div class="invalid-feedback" *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched">
+                  Please provide a valid email address.
+                </div>
+              </div>
+            </div>
+            
+            <!-- Age Field -->
+            <div class="mb-3">
+              <label for="age" class="form-label fw-semibold">
+                {{ 'PROFILE.AGE' | translate }}
+              </label>
+              <input 
+                formControlName="age" 
+                type="number" 
+                id="age"
+                class="form-control form-control-lg"
+                [class.is-invalid]="profileForm.get('age')?.invalid && profileForm.get('age')?.touched"
+                [class.is-valid]="profileForm.get('age')?.valid && profileForm.get('age')?.touched"
+                placeholder="Enter your age"
+                min="1" max="120" />
+              <div class="invalid-feedback" *ngIf="profileForm.get('age')?.invalid && profileForm.get('age')?.touched">
+                Please provide a valid age.
+              </div>
+            </div>
+            
+            <!-- Gender Field -->
+            <div class="mb-3">
+              <label for="gender" class="form-label fw-semibold">
+                <i class="fas fa-venus-mars me-2 text-success"></i>
+                {{ 'PROFILE.GENDER.LABEL' | translate }}
+              </label>
+              <select 
+                formControlName="gender" 
+                id="gender"
+                class="form-select form-select-lg"
+                [class.is-invalid]="profileForm.get('gender')?.invalid && profileForm.get('gender')?.touched"
+                [class.is-valid]="profileForm.get('gender')?.valid && profileForm.get('gender')?.touched">
+                <option value="">{{ 'PROFILE.GENDER.SELECT' | translate }}</option>
+                <option value="male">{{ 'PROFILE.GENDER.MALE' | translate }}</option>
+                <option value="female">{{ 'PROFILE.GENDER.FEMALE' | translate }}</option>
+              </select>
+              <div class="invalid-feedback" *ngIf="profileForm.get('gender')?.invalid && profileForm.get('gender')?.touched">
+                Please select a gender.
+              </div>
+            </div>
+            
+            <!-- Role Field -->
+            <div class="mb-4">
+              <label for="role" class="form-label fw-semibold">
+                <i class="fas fa-user-tag me-2 text-secondary"></i>
+                {{ 'PROFILE.ROLE' | translate }}
+              </label>
+              <input 
+                formControlName="role" 
+                type="text" 
+                id="role"
+                class="form-control form-control-lg"
+                [class.is-invalid]="profileForm.get('role')?.invalid && profileForm.get('role')?.touched"
+                [class.is-valid]="profileForm.get('role')?.valid && profileForm.get('role')?.touched"
+                placeholder="Enter your role"
+                readonly />
+              <div class="form-text">
+                <i class="fas fa-info-circle me-1"></i>
+                Your role is assigned by the administrator
+              </div>
+            </div>
+            
+            <!-- Submit Button -->
+            <div class="d-grid gap-2">
+              <button 
+                type="submit" 
+                class="btn btn-info btn-lg"
+                [disabled]="profileForm.invalid"
+                [class.disabled]="profileForm.invalid">
+                <i class="fas fa-save me-2"></i>
+                {{ 'PROFILE.SUBMIT' | translate }}
+                <span *ngIf="profileForm.invalid" class="ms-2">
+                  <i class="fas fa-exclamation-triangle"></i>
+                </span>
+              </button>
+            </div>
+            
+          </form>
+        </div>
+      </div>
+      
+      <!-- Success Message -->
+      <div *ngIf="successMessage" class="alert alert-success alert-dismissible fade show shadow-sm mt-3" role="alert">
+        <i class="fas fa-check-circle me-2"></i>
+        <strong>Success!</strong> {{ successMessage }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+      
+      <!-- Profile Info Card -->
+      <div class="card border-info shadow-sm mt-4">
+        <div class="card-header bg-info text-white">
+          <h6 class="mb-0">
+            <i class="fas fa-info-circle me-2"></i>
+            Profile Information
+          </h6>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <h6 class="text-info">
+                <i class="fas fa-shield-alt me-2"></i>
+                Privacy:
+              </h6>
+              <p class="small text-muted mb-0">
+                Your personal information is secure and will only be used for account management purposes.
+              </p>
+            </div>
+            <div class="col-md-6">
+              <h6 class="text-info">
+                <i class="fas fa-sync-alt me-2"></i>
+                Updates:
+              </h6>
+              <p class="small text-muted mb-0">
+                Changes to your profile will be saved immediately and reflected across the platform.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
 </div>

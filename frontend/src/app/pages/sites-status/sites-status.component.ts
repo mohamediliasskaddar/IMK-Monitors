@@ -1,11 +1,13 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SiteService } from '../../services/site.service';
+import { TranslateModule } from '@ngx-translate/core';
+
 
 @Component({
   selector: 'app-sites-status',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule],
   templateUrl: './sites-status.component.html',
   styleUrls: ['./sites-status.component.css']
 })

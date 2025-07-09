@@ -3,17 +3,19 @@ import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angula
 import { Router } from '@angular/router';
 import { SiteService } from '../../services/site.service';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-add-website',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, TranslateModule],
   templateUrl: './add-website.component.html',
   styleUrl: './add-website.component.css'
 })
 export class AddWebsiteComponent {
   siteForm: FormGroup;
   errorMessage: string = '';
+successMessage: any;
 
   constructor(
     private fb: FormBuilder,
@@ -37,7 +39,7 @@ export class AddWebsiteComponent {
     };
 
     this.siteService.createSite(newSite).subscribe({
-      next: () => this.router.navigate(['/user-sites']),
+      next: () => this.router.navigate(['/dashboard/user-sites']),
       error: err => this.errorMessage = err.error.message || 'Erreur lors de la création du site'
     });
   }

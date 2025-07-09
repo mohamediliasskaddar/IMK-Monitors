@@ -1,11 +1,128 @@
-
+<!-- 
  <div class="sidebar">
+    <button *ngIf="userRole === 'admin'" (click)="select('profile')">➕  your profile</button>
     <button *ngIf="userRole === 'admin'" (click)="select('users-list')">➕ users list</button>
+    <button *ngIf="userRole === 'admin'" (click)="select('users-sites')">➕ users sites</button>
     
     
     <button *ngIf="userRole === 'user' " (click)="select('add-website')">📋 new site</button> 
     <button *ngIf="userRole === 'user'" (click)="select('user-sites')">📜 My Sites</button>
     <button *ngIf="userRole === 'user'" (click)="select('sites-status')">📜  Sites status</button>
     <button *ngIf="userRole === 'user'" (click)="select('profile')">➕  your profile</button>
+   
 
-</div> 
+   <button (click)="logout()">🚪 Déconnexion</button>
+
+</div>  -->
+<div class="d-flex flex-column h-100 bg-light border-end">
+  
+  <!-- Sidebar Header -->
+  <div class="p-3 border-bottom bg-white">
+    <h6 class="mb-0 text-muted fw-bold text-uppercase">
+      <i class="fas fa-tachometer-alt me-2 text-primary"></i>
+      Dashboard
+    </h6>
+  </div>
+  
+  <!-- Navigation Menu -->
+  <nav class="flex-grow-1 p-2">
+    
+    <!-- Admin Menu Section -->
+    <div *ngIf="userRole === 'admin'" class="mb-4">
+      <div class="px-3 py-2">
+        <small class="text-muted fw-bold text-uppercase">Admin Panel</small>
+      </div>
+      
+      <div class="list-group list-group-flush">
+        <button 
+          class="list-group-item list-group-item-action border-0 rounded mb-1 py-3"
+          [class.active]="selectedSection === 'profile'"
+          (click)="select('profile')">
+          <i class="fas fa-user-circle me-3 text-primary"></i>
+          <span class="fw-medium">Your Profile</span>
+        </button>
+        
+        <button 
+          class="list-group-item list-group-item-action border-0 rounded mb-1 py-3"
+          [class.active]="selectedSection === 'users-list'"
+          (click)="select('users-list')">
+          <i class="fas fa-users me-3 text-info"></i>
+          <span class="fw-medium">Users List</span>
+        </button>
+        
+        <button 
+          class="list-group-item list-group-item-action border-0 rounded mb-1 py-3"
+          [class.active]="selectedSection === 'users-sites'"
+          (click)="select('users-sites')">
+          <i class="fas fa-globe me-3 text-success"></i>
+          <span class="fw-medium">Users Sites</span>
+        </button>
+      </div>
+    </div>
+    
+    <!-- User Menu Section -->
+    <div *ngIf="userRole === 'user'" class="mb-4">
+      <div class="px-3 py-2">
+        <small class="text-muted fw-bold text-uppercase">User panel</small>
+      </div>
+      
+      <div class="list-group list-group-flush">
+        <button 
+          class="list-group-item list-group-item-action border-0 rounded mb-1 py-3"
+          [class.active]="selectedSection === 'add-website'"
+          (click)="select('add-website')">
+          <i class="fas fa-plus-circle me-3 text-success"></i>
+          <span class="fw-medium">New Site</span>
+          <!-- <span class="badge bg-success ms-auto">Add</span> -->
+        </button>
+        
+        <button 
+          class="list-group-item list-group-item-action border-0 rounded mb-1 py-3"
+          [class.active]="selectedSection === 'user-sites'"
+          (click)="select('user-sites')">
+          <i class="fas fa-list me-3 text-primary"></i>
+          <span class="fw-medium">My Sites</span>
+        </button>
+        
+        <button 
+          class="list-group-item list-group-item-action border-0 rounded mb-1 py-3"
+          [class.active]="selectedSection === 'sites-status'"
+          (click)="select('sites-status')">
+          <i class="fas fa-chart-line me-3 text-warning"></i>
+          <span class="fw-medium">Sites Status</span>
+        </button>
+        
+        <button 
+          class="list-group-item list-group-item-action border-0 rounded mb-1 py-3"
+          [class.active]="selectedSection === 'profile'"
+          (click)="select('profile')">
+          <i class="fas fa-user-circle me-3 text-info"></i>
+          <span class="fw-medium">Your Profile</span>
+        </button>
+      </div>
+    </div>
+    
+  </nav>
+  
+  <!-- Sidebar Footer -->
+  <div class="mt-auto p-3 border-top bg-white">
+    <div class="d-grid">
+      <button 
+        class="btn btn-outline-danger btn-sm"
+        (click)="logout()">
+        <i class="fas fa-sign-out-alt me-2"></i>
+        <span class="fw-medium">Logout</span>
+      </button>
+    </div>
+    
+    <!-- User Info (Optional) -->
+    <div class="text-center mt-3">
+      <small class="text-muted">
+        <i class="fas fa-user me-1"></i>
+        Role : {{ userRole  }} 
+        <!-- {{ userRole | titlecase }} User -->
+      </small>
+    </div>
+  </div>
+  
+</div>

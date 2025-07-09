@@ -25,7 +25,7 @@ app.use('/api/users', require('./routes/userRoute'));
 app.use('/api/sites', require('./routes/siteRoute'));
 app.use('/api/logs', require('./routes/logRoute'));
 app.use('/api/config', require('./routes/configRoute'));
-
+const Config = require('./models/Config');
 
 // 404
 app.use((req, res) => {
@@ -34,18 +34,31 @@ app.use((req, res) => {
 
 const PORT = process.env.PORT || 3000;
 
+async function ensureConfig() {
+  const e = await Config.findOne({ key: 'checkInterval' });
+  if (!e) {
+    await Config.create({
+      key: 'checkInterval',
+      value: parseInt(process.env.CHECK_INTERVAL_MINUTES, 10) || 20
+    });
+  }
+}
+
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => {
+  .then( async () => {
+    await ensureConfig();
+
     console.log('✅ MongoDB connected');
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
       checkSites(); // ✅ Call it only after server is ready
       
       // Lancer le check toutes les 5 minutes
-        cron.schedule('*/${CHECK_INTERVAL} * * * *', () => {
-          console.log(`⏰Running site check every ${CHECK_INTERVAL} minutes`);
-          checkSites();
-        });
+       cron.schedule('* * * * *', async () => {
+        const { value: interval } = await Config.findOne({ key: 'checkInterval' });
+        console.log(`⏰ Running site check every ${interval} minutes`);
+        checkSites();
+      });
     });
 
   })

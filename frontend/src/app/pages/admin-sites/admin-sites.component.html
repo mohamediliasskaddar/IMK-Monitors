@@ -1,0 +1,334 @@
+<!-- <div class="admin-sites">
+  <h2>{{ 'ADMIN_SITES.TITLE' | translate }}</h2>
+
+
+  <div *ngIf="intervalLoading">⏳ {{ 'ADMIN_SITES.INTERVAL_LOADING' | translate }}</div>
+  <div *ngIf="intervalError" class="error">❌ {{ intervalError }}</div>
+  <div *ngIf="!intervalLoading">
+    <label>
+      {{ 'ADMIN_SITES.INTERVAL_LABEL' | translate }}
+      <input type="number" [(ngModel)]="globalInterval" min="1" />
+    </label>
+    <button (click)="saveGlobalInterval()">
+      {{ 'ADMIN_SITES.SAVE_INTERVAL' | translate }}
+    </button>
+  </div>
+
+  <hr />
+
+
+  <div *ngIf="loading">⏳ {{ 'ADMIN_SITES.LOADING_SITES' | translate }}</div>
+  <div *ngIf="error" class="error">❌ {{ error }}</div>
+  <div *ngIf="!loading">
+    <label>
+      {{ 'ADMIN_SITES.FILTER_LABEL' | translate }}
+      <select [(ngModel)]="filter" (change)="onFilterChange(filter)">
+        <option value="all">{{ 'ADMIN_SITES.FILTER.ALL' | translate }}</option>
+        <option value="up">{{ 'ADMIN_SITES.FILTER.UP' | translate }}</option>
+        <option value="down">{{ 'ADMIN_SITES.FILTER.DOWN' | translate }}</option>
+      </select>
+    </label>
+  </div>
+
+
+  <table *ngIf="!loading && filteredStatuses.length">
+    <thead>
+      <tr>
+        <th>{{ 'ADMIN_SITES.TABLE.NAME' | translate }}</th>
+        <th>{{ 'ADMIN_SITES.TABLE.URL' | translate }}</th>
+        <th>{{ 'ADMIN_SITES.TABLE.OWNER' | translate }}</th>
+        <th>{{ 'ADMIN_SITES.TABLE.STATUS' | translate }}</th>
+        <th>{{ 'ADMIN_SITES.TABLE.LAST_CHECK' | translate }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let s of filteredStatuses">
+        <td>{{ s.urlname }}</td>
+        <td>{{ s.url }}</td>
+        <td>{{ s.ownerName }}<br /><small>{{ s.ownerEmail }}</small></td>
+        <td [class.up]="s.lastStatus==='up'" [class.down]="s.lastStatus==='down'">
+          {{ s.lastStatus | uppercase }}
+        </td>
+        <td>{{ s.lastChecked ? (s.lastChecked | date:'short') : '—' }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="!loading && !filteredStatuses.length">
+    {{ 'ADMIN_SITES.NO_SITES' | translate }}
+  </p>
+</div> -->
+
+<div class="container-fluid p-0">
+  <div class="row">
+    <div class="col-12">
+      
+      <!-- Page Header -->
+      <!-- <div class="card shadow-sm border-0 mb-4">
+        <div class="card-header bg-info text-white">
+          <h2 class="card-title mb-0 d-flex align-items-center">
+            <i class="fas fa-globe me-3 fs-4"></i>
+            {{ 'ADMIN_SITES.TITLE' | translate }}
+          </h2>
+        </div>
+      </div> -->
+      
+      <!-- Global Interval Settings -->
+      <div class="card shadow-sm border-0 mb-4">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">
+            <i class="fas fa-cog me-2"></i>
+            Global Settings
+          </h5>
+        </div>
+        <div class="card-body">
+          
+          <!-- Interval Loading -->
+          <div *ngIf="intervalLoading" class="text-center py-3">
+            <div class="spinner-border text-primary me-2" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <span class="text-muted">{{ 'ADMIN_SITES.INTERVAL_LOADING' | translate }}</span>
+          </div>
+          
+          <!-- Interval Error -->
+          <div *ngIf="intervalError" class="alert alert-danger" role="alert">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            {{ intervalError }}
+          </div>
+          
+          <!-- Interval Settings Form -->
+          <div *ngIf="!intervalLoading" class="row align-items-end">
+            <div class="col-md-6">
+              <label for="globalInterval" class="form-label fw-semibold">
+                <i class="fas fa-clock me-2 text-primary"></i>
+                {{ 'ADMIN_SITES.INTERVAL_LABEL' | translate }}
+              </label>
+              <div class="input-group">
+                <input 
+                  type="number" 
+                  id="globalInterval"
+                  class="form-control form-control-lg"
+                  [(ngModel)]="globalInterval" 
+                  min="1" 
+                  placeholder="Enter minutes" />
+                <span class="input-group-text">minutes</span>
+              </div>
+              <div class="form-text">
+                <i class="fas fa-info-circle me-1"></i>
+                Monitoring interval for all sites
+              </div>
+            </div>
+            <div class="col-md-6">
+              <button 
+                class="btn btn-success btn-lg"
+                (click)="saveGlobalInterval()">
+                <i class="fas fa-save me-2"></i>
+                {{ 'ADMIN_SITES.SAVE_INTERVAL' | translate }}
+              </button>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      
+      <!-- Sites Management -->
+      <div class="card shadow-sm border-0">
+        <div class="card-header bg-secondary text-white">
+          <div class="row align-items-center">
+            <div class="col">
+              <h5 class="mb-0">
+                <i class="fas fa-list me-2"></i>
+                Sites Management
+              </h5>
+            </div>
+            <div class="col-auto">
+              <span class="badge bg-light text-dark rounded-pill">
+                {{ filteredStatuses.length || 0 }} Sites
+              </span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card-body">
+          
+          <!-- Loading State -->
+          <div *ngIf="loading" class="text-center py-5">
+            <div class="spinner-border text-secondary mb-3" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <h5 class="text-muted">
+              <i class="fas fa-hourglass-half me-2"></i>
+              {{ 'ADMIN_SITES.LOADING_SITES' | translate }}
+            </h5>
+          </div>
+          
+          <!-- Error State -->
+          <div *ngIf="error" class="alert alert-danger" role="alert">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            <strong>Error!</strong> {{ error }}
+          </div>
+          
+          <!-- Filter Controls -->
+          <div *ngIf="!loading" class="row mb-4">
+            <div class="col-md-4">
+              <label for="statusFilter" class="form-label fw-semibold">
+                <i class="fas fa-filter me-2 text-secondary"></i>
+                {{ 'ADMIN_SITES.FILTER_LABEL' | translate }}
+              </label>
+              <select 
+                id="statusFilter"
+                class="form-select form-select-lg"
+                [(ngModel)]="filter" 
+                (change)="onFilterChange(filter)">
+                <option value="all">{{ 'ADMIN_SITES.FILTER.ALL' | translate }}</option>
+                <option value="up">{{ 'ADMIN_SITES.FILTER.UP' | translate }}</option>
+                <option value="down">{{ 'ADMIN_SITES.FILTER.DOWN' | translate }}</option>
+              </select>
+            </div>
+            <div class="col-md-8 d-flex align-items-end">
+              <div class="btn-group" role="group">
+                <button class="btn btn-outline-primary" >
+                  <i class="fas fa-sync-alt me-2"></i>
+                  Refresh
+                </button>
+                <button class="btn btn-outline-success" >
+                  <i class="fas fa-download me-2"></i>
+                  Export
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Sites Table -->
+          <div *ngIf="!loading && filteredStatuses.length" class="table-responsive">
+            <table class="table table-hover table-striped">
+              <thead class="table-dark">
+                <tr>
+                  <th scope="col">
+                    <i class="fas fa-tag me-2"></i>
+                    {{ 'ADMIN_SITES.TABLE.NAME' | translate }}
+                  </th>
+                  <th scope="col">
+                    <i class="fas fa-link me-2"></i>
+                    {{ 'ADMIN_SITES.TABLE.URL' | translate }}
+                  </th>
+                  <th scope="col">
+                    <i class="fas fa-user me-2"></i>
+                    {{ 'ADMIN_SITES.TABLE.OWNER' | translate }}
+                  </th>
+                  <th scope="col">
+                    <i class="fas fa-heartbeat me-2"></i>
+                    {{ 'ADMIN_SITES.TABLE.STATUS' | translate }}
+                  </th>
+                  <th scope="col">
+                    <i class="fas fa-clock me-2"></i>
+                    {{ 'ADMIN_SITES.TABLE.LAST_CHECK' | translate }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let s of filteredStatuses; let i = index">
+                  <td>
+                    <strong class="text-dark">{{ s.urlname }}</strong>
+                  </td>
+                  <td>
+                    <a [href]="s.url" target="_blank" class="text-decoration-none">
+                      <i class="fas fa-external-link-alt me-1 text-primary"></i>
+                      {{ s.url }}
+                    </a>
+                  </td>
+                  <td>
+                    <div>
+                      <strong class="text-dark">{{ s.ownerName }}</strong>
+                      <br>
+                      <small class="text-muted">
+                        <i class="fas fa-envelope me-1"></i>
+                        {{ s.ownerEmail }}
+                      </small>
+                    </div>
+                  </td>
+                  <td>
+                    <span class="badge fs-6 px-3 py-2"
+                          [class.bg-success]="s.lastStatus === 'up'"
+                          [class.bg-danger]="s.lastStatus === 'down'"
+                          [class.bg-secondary]="s.lastStatus !== 'up' && s.lastStatus !== 'down'">
+                      <i class="fas fa-circle me-1" 
+                         [class.text-white]="true"></i>
+                      {{ s.lastStatus | uppercase }}
+                    </span>
+                  </td>
+                  <td>
+                    <span *ngIf="s.lastChecked; else noCheck" class="text-muted">
+                      <i class="fas fa-calendar-alt me-1"></i>
+                      {{ s.lastChecked | date:'short' }}
+                    </span>
+                    <ng-template #noCheck>
+                      <span class="text-muted">
+                        <i class="fas fa-minus me-1"></i>
+                        Never
+                      </span>
+                    </ng-template>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <!-- Empty State -->
+          <div *ngIf="!loading && !filteredStatuses.length" class="text-center py-5">
+            <div class="mb-4">
+              <i class="fas fa-search text-muted" style="font-size: 4rem;"></i>
+            </div>
+            <h4 class="text-muted mb-3">No Sites Found</h4>
+            <p class="text-muted">
+              {{ 'ADMIN_SITES.NO_SITES' | translate }}
+            </p>
+          </div>
+          
+        </div>
+      </div>
+      
+      <!-- Quick Stats -->
+      <div class="row mt-4">
+        <div class="col-md-3">
+          <div class="card bg-success text-white shadow-sm">
+            <div class="card-body text-center">
+              <i class="fas fa-check-circle fs-1 mb-2"></i>
+              <h5 class="card-title">Online Sites</h5>
+              <h3 class="mb-0">a</h3>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card bg-danger text-white shadow-sm">
+            <div class="card-body text-center">
+              <i class="fas fa-times-circle fs-1 mb-2"></i>
+              <h5 class="card-title">Offline Sites</h5>
+              <h3 class="mb-0"> a method here </h3>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card bg-info text-white shadow-sm">
+            <div class="card-body text-center">
+              <i class="fas fa-globe fs-1 mb-2"></i>
+              <h5 class="card-title">Total Sites</h5>
+              <h3 class="mb-0"> a method here  </h3>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card bg-warning text-white shadow-sm">
+            <div class="card-body text-center">
+              <i class="fas fa-clock fs-1 mb-2"></i>
+              <h5 class="card-title">Check Interval</h5>
+              <h3 class="mb-0">{{ globalInterval }}m</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>

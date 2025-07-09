@@ -44,4 +44,7 @@ export class RegisterComponent {
       }
     });
   }
+  redirectToLogin(){
+    this.router.navigate(['/login']);
+  }
 }

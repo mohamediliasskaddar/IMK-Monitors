@@ -1,18 +1,196 @@
+<!-- 
 <div class="sites-status">
-  <h2>Site Statuses</h2>
-  <div *ngIf="loading">⏳ Loading statuses…</div>
+  <h2>{{ 'SITE_STATUS.TITLE' | translate }}</h2>
+
+  <div *ngIf="loading">⏳ {{ 'SITE_STATUS.LOADING' | translate }}</div>
   <div *ngIf="error" class="error">❌ {{ error }}</div>
+
   <ul *ngIf="!loading && statuses.length">
     <p class="info">
-      Vérification toutes les {{ interval }} minutes
+      {{ 'SITE_STATUS.CHECK_INTERVAL' | translate:{ interval: interval } }}
     </p>
     <li *ngFor="let s of statuses">
       <strong>{{ s.urlname }}</strong> ({{ s.url }}) —
       <span [class.up]="s.lastStatus==='up'" [class.down]="s.lastStatus==='down'">
         {{ s.lastStatus | uppercase }}
       </span>
-      <small>Last checked: {{ s.lastChecked | date:'short' }}</small>
+      <small>{{ 'SITE_STATUS.LAST_CHECKED' | translate }}: {{ s.lastChecked | date:'short' }}</small>
     </li>
   </ul>
-  <p *ngIf="!loading && !statuses.length">No sites to monitor.</p>
+
+  <p *ngIf="!loading && !statuses.length">
+    {{ 'SITE_STATUS.NO_SITES' | translate }}
+  </p>
+</div> -->
+<div class="container-fluid p-0">
+  <div class="row">
+    <div class="col-12">
+      
+      <!-- Page Header -->
+      <div class="card shadow-sm border-0 mb-4">
+        <div class="card-header bg-warning text-dark">
+          <h2 class="card-title mb-0 d-flex align-items-center">
+            <i class="fas fa-chart-line me-3 fs-4"></i>
+            {{ 'SITE_STATUS.TITLE' | translate }}
+          </h2>
+        </div>
+      </div>
+      
+      <!-- Loading State -->
+      <div *ngIf="loading" class="card shadow-sm border-0 mb-4">
+        <div class="card-body text-center py-5">
+          <div class="spinner-border text-warning mb-3" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <h5 class="text-muted">
+            <i class="fas fa-hourglass-half me-2"></i>
+            {{ 'SITE_STATUS.LOADING' | translate }}
+          </h5>
+        </div>
+      </div>
+      
+      <!-- Error State -->
+      <div *ngIf="error" class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
+        <i class="fas fa-exclamation-triangle me-2"></i>
+        <strong>Error!</strong> {{ error }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+      
+      <!-- Status List -->
+      <div *ngIf="!loading && statuses.length">
+        
+        <!-- Check Interval Info -->
+        <div class="alert alert-info shadow-sm mb-4" role="alert">
+          <i class="fas fa-info-circle me-2"></i>
+          <strong>Monitoring Info:</strong> 
+          {{ 'SITE_STATUS.CHECK_INTERVAL' | translate:{ interval: interval } }}
+        </div>
+        
+        <!-- Sites Status Cards -->
+        <div class="row">
+          <div *ngFor="let s of statuses; let i = index" class="col-12 col-md-6 col-lg-4 mb-4">
+            <div class="card shadow-sm border-0 h-100">
+              
+              <!-- Card Header with Status -->
+              <div class="card-header d-flex justify-content-between align-items-center"
+                   [class.bg-success]="s.lastStatus === 'up'"
+                   [class.bg-danger]="s.lastStatus === 'down'"
+                   [class.bg-secondary]="s.lastStatus !== 'up' && s.lastStatus !== 'down'"
+                   [class.text-white]="true">
+                <h6 class="mb-0 fw-bold">
+                  <i class="fas fa-globe me-2"></i>
+                  {{ s.urlname }}
+                </h6>
+                <span class="badge"
+                      [class.bg-light]="s.lastStatus === 'up'"
+                      [class.bg-light]="s.lastStatus === 'down'"
+                      [class.text-success]="s.lastStatus === 'up'"
+                      [class.text-danger]="s.lastStatus === 'down'"
+                      [class.text-dark]="s.lastStatus !== 'up' && s.lastStatus !== 'down'">
+                  <i class="fas fa-circle me-1" 
+                     [class.text-success]="s.lastStatus === 'up'"
+                     [class.text-danger]="s.lastStatus === 'down'"></i>
+                  {{ s.lastStatus | uppercase }}
+                </span>
+              </div>
+              
+              <!-- Card Body -->
+              <div class="card-body">
+                <div class="mb-3">
+                  <small class="text-muted">Website URL:</small>
+                  <p class="mb-0 text-break">
+                    <i class="fas fa-external-link-alt me-1 text-primary"></i>
+                    <a [href]="s.url" target="_blank" class="text-decoration-none">
+                      {{ s.url }}
+                    </a>
+                  </p>
+                </div>
+                
+                <div class="mb-3">
+                  <small class="text-muted">{{ 'SITE_STATUS.LAST_CHECKED' | translate }}:</small>
+                  <p class="mb-0">
+                    <i class="fas fa-clock me-1 text-info"></i>
+                    {{ s.lastChecked | date:'short' }}
+                  </p>
+                </div>
+                
+                <!-- Status Indicator -->
+                <div class="d-flex align-items-center justify-content-between">
+                  <div class="d-flex align-items-center">
+                    <div class="status-indicator me-2"
+                         [class.bg-success]="s.lastStatus === 'up'"
+                         [class.bg-danger]="s.lastStatus === 'down'"
+                         [class.bg-secondary]="s.lastStatus !== 'up' && s.lastStatus !== 'down'"
+                         style="width: 12px; height: 12px; border-radius: 50%;"></div>
+                    <small class="text-muted">
+                      {{ s.lastStatus === 'up' ? 'Online' : s.lastStatus === 'down' ? 'Offline' : 'Unknown' }}
+                    </small>
+                  </div>
+                  
+                  <!-- Action Button -->
+                  <button class="btn btn-outline-primary btn-sm" >
+                    <i class="fas fa-sync-alt me-1"></i>
+                    Check Now
+                  </button>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+        
+        <!-- Summary Stats -->
+        <div class="row mt-4">
+          <div class="col-md-4">
+            <div class="card bg-success text-white shadow-sm">
+              <div class="card-body text-center">
+                <i class="fas fa-check-circle fs-1 mb-2"></i>
+                <h5 class="card-title">Online Sites</h5>
+                <h3 class="mb-0">a methode </h3>
+                <!-- <h3 class="mb-0">{{ getOnlineSitesCount() }}</h3> -->
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card bg-danger text-white shadow-sm">
+              <div class="card-body text-center">
+                <i class="fas fa-times-circle fs-1 mb-2"></i>
+                <h5 class="card-title">Offline Sites</h5>
+                <h3 class="mb-0"><h3 class="mb-0">a methode </h3></h3>
+                <!-- <h3 class="mb-0">{{ getOfflineSitesCount() }}</h3> -->
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card bg-info text-white shadow-sm">
+              <div class="card-body text-center">
+                <i class="fas fa-globe fs-1 mb-2"></i>
+                <h5 class="card-title">Total Sites</h5>
+                <h3 class="mb-0">{{ statuses.length }}</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      
+      <!-- Empty State -->
+      <div *ngIf="!loading && !statuses.length" class="card shadow-sm border-0">
+        <div class="card-body text-center py-5">
+          <div class="mb-4">
+            <i class="fas fa-chart-line text-muted" style="font-size: 4rem;"></i>
+          </div>
+          <h4 class="text-muted mb-3">No Sites to Monitor</h4>
+          <p class="text-muted mb-4">
+            {{ 'SITE_STATUS.NO_SITES' | translate }}
+          </p>
+          <button class="btn btn-primary btn-lg" >
+            <i class="fas fa-plus-circle me-2"></i>
+            Add Your First Website
+          </button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
 </div>
